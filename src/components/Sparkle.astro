@@ -1,0 +1,83 @@
+---
+/**
+ * Sparkle — animated glitter overlay.
+ * Generates randomised CSS sparkle dots using pseudo-elements + keyframe animation.
+ * 
+ * Props:
+ *  - count: number of sparkles (default 20)
+ *  - colors: array of CSS colours (defaults to palette golds/roses/whites)
+ *  - class: passthrough class for sizing / positioning
+ */
+interface Props {
+  count?: number;
+  colors?: string[];
+  class?: string;
+}
+
+const {
+  count = 20,
+  colors = ['#d4af37', '#f0ece2', '#b5667a', '#3a8fd4', '#ffffff'],
+  class: className = '',
+} = Astro.props;
+
+// Generate deterministic-looking random sparkle data at build time
+function seededRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+const sparkles = Array.from({ length: count }, (_, i) => ({
+  left: `${(seededRandom(i * 7 + 1) * 100).toFixed(1)}%`,
+  top: `${(seededRandom(i * 13 + 3) * 100).toFixed(1)}%`,
+  size: `${(seededRandom(i * 19 + 5) * 3 + 1).toFixed(1)}px`,
+  delay: `${(seededRandom(i * 23 + 7) * 5).toFixed(2)}s`,
+  duration: `${(seededRandom(i * 29 + 11) * 3 + 2).toFixed(2)}s`,
+  color: colors[Math.floor(seededRandom(i * 31 + 13) * colors.length)],
+}));
+---
+
+<div class={`sparkle-field ${className}`} aria-hidden="true">
+  {sparkles.map((s) => (
+    <span
+      class="sparkle-dot"
+      style={`left:${s.left};top:${s.top};--size:${s.size};--delay:${s.delay};--dur:${s.duration};--color:${s.color}`}
+    />
+  ))}
+</div>
+
+<style>
+  .sparkle-field {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .sparkle-dot {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: var(--color);
+    border-radius: 50%;
+    animation: sparkle-twinkle var(--dur) var(--delay) ease-in-out infinite;
+    box-shadow: 0 0 4px 1px var(--color);
+  }
+
+  @keyframes sparkle-twinkle {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sparkle-dot {
+      animation: none;
+      opacity: 0.4;
+    }
+  }
+</style>

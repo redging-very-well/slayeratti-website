@@ -1,5 +1,6 @@
 ---
 import FloralAccent from './FloralAccent.astro';
+import Sparkle from './Sparkle.astro';
 const tracks = [
   {
     title: 'Embers in the Current',
@@ -54,9 +55,15 @@ const platforms = [
 ---
 
 <section class="music section" id="music">
+  <Sparkle count={22} colors={['#d4af37', '#3a8fd4', '#f0ece2', '#b5667a']} class="music-sparkles" />
   <div class="music-floral-bg" aria-hidden="true">
     <FloralAccent variant="rose" class="music-bg-rose music-bg-rose--1" />
     <FloralAccent variant="wildflower" class="music-bg-rose music-bg-rose--2" />
+    <FloralAccent variant="fern" class="music-bg-fern music-bg-fern--1" />
+    <FloralAccent variant="lily" class="music-bg-lily" />
+    <FloralAccent variant="petal-scatter" class="music-bg-petals" />
+    <FloralAccent variant="rosebud" class="music-bg-rosebud music-bg-rosebud--1" />
+    <FloralAccent variant="rosebud" class="music-bg-rosebud music-bg-rosebud--2" />
   </div>
   <div class="container">
     <div class="section-title reveal">
@@ -80,6 +87,10 @@ const platforms = [
           <span class="track-duration">{track.duration}</span>
         </article>
       ))}
+    </div>
+
+    <div class="music-trailing-vine" aria-hidden="true">
+      <FloralAccent variant="trailing-vine" class="music-vine-line" />
     </div>
 
     <div class="platforms reveal">
@@ -107,6 +118,10 @@ const platforms = [
     overflow: hidden;
   }
 
+  :global(.music-sparkles) {
+    z-index: 1;
+  }
+
   .music-floral-bg {
     position: absolute;
     inset: 0;
@@ -132,6 +147,75 @@ const platforms = [
     width: 130px;
     height: 160px;
     color: var(--accent-gold);
+  }
+
+  :global(.music-bg-fern--1) {
+    position: absolute;
+    top: 15%;
+    left: 3%;
+    width: 50px;
+    height: 140px;
+    color: var(--accent-green);
+    opacity: 0.5;
+    transform: rotate(10deg);
+  }
+
+  :global(.music-bg-lily) {
+    position: absolute;
+    bottom: 20%;
+    right: 8%;
+    width: 100px;
+    height: 120px;
+    color: var(--accent-rose);
+    opacity: 0.4;
+  }
+
+  :global(.music-bg-petals) {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 180px;
+    height: 180px;
+    color: var(--accent-gold);
+    opacity: 0.25;
+  }
+
+  :global(.music-bg-rosebud) {
+    position: absolute;
+  }
+
+  :global(.music-bg-rosebud--1) {
+    top: 40%;
+    right: 3%;
+    width: 35px;
+    height: 55px;
+    color: var(--accent-rose);
+    opacity: 0.6;
+    transform: rotate(-20deg);
+  }
+
+  :global(.music-bg-rosebud--2) {
+    bottom: 35%;
+    left: 5%;
+    width: 30px;
+    height: 48px;
+    color: var(--accent-blue);
+    opacity: 0.5;
+    transform: rotate(15deg);
+  }
+
+  .music-trailing-vine {
+    text-align: center;
+    padding: var(--space-sm) 0;
+    pointer-events: none;
+  }
+
+  :global(.music-vine-line) {
+    width: min(100%, 320px);
+    height: auto;
+    margin: 0 auto;
+    color: var(--accent-green);
+    opacity: 0.45;
   }
 
   .music .container {

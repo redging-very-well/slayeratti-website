@@ -1,5 +1,6 @@
 ---
 import FloralAccent from './FloralAccent.astro';
+import Sparkle from './Sparkle.astro';
 const galleryItems = [
   { alt: 'Slayeratti performing live — electric guitar solo under blue stage lights', aspect: 'landscape' },
   { alt: 'Close-up of the blue Fender Stratocaster with floral stage backdrop', aspect: 'portrait' },
@@ -11,6 +12,13 @@ const galleryItems = [
 ---
 
 <section class="gallery section" id="gallery">
+  <Sparkle count={15} colors={['#d4af37', '#b5667a', '#f0ece2']} class="gallery-sparkles" />
+  <div class="gallery-bg-florals" aria-hidden="true">
+    <FloralAccent variant="peony" class="gallery-bg-peony" />
+    <FloralAccent variant="lily" class="gallery-bg-lily" />
+    <FloralAccent variant="rosebud" class="gallery-bg-rosebud gallery-bg-rosebud--1" />
+    <FloralAccent variant="rosebud" class="gallery-bg-rosebud gallery-bg-rosebud--2" />
+  </div>
   <div class="container">
     <div class="section-title reveal">
       <div class="section-title-floral">
@@ -45,6 +53,62 @@ const galleryItems = [
 <style>
   .gallery {
     background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.gallery-sparkles) {
+    z-index: 1;
+  }
+
+  .gallery-bg-florals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  :global(.gallery-bg-peony) {
+    position: absolute;
+    top: 5%;
+    right: -15px;
+    width: 140px;
+    height: 140px;
+    color: var(--accent-rose);
+    opacity: 0.35;
+  }
+
+  :global(.gallery-bg-lily) {
+    position: absolute;
+    bottom: 10%;
+    left: -10px;
+    width: 100px;
+    height: 130px;
+    color: var(--accent-gold);
+    opacity: 0.3;
+  }
+
+  :global(.gallery-bg-rosebud) {
+    position: absolute;
+  }
+
+  :global(.gallery-bg-rosebud--1) {
+    top: 35%;
+    left: 5%;
+    width: 30px;
+    height: 50px;
+    color: var(--accent-rose);
+    opacity: 0.5;
+    transform: rotate(-15deg);
+  }
+
+  :global(.gallery-bg-rosebud--2) {
+    bottom: 25%;
+    right: 6%;
+    width: 28px;
+    height: 45px;
+    color: var(--accent-blue);
+    opacity: 0.4;
+    transform: rotate(20deg);
   }
 
   .section-title-floral {

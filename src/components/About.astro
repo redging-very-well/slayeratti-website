@@ -1,13 +1,24 @@
 ---
 import FloralAccent from './FloralAccent.astro';
+import Sparkle from './Sparkle.astro';
 ---
 
 <section class="about section" id="about">
+  <Sparkle count={18} colors={['#d4af37', '#b5667a', '#f0ece2']} class="about-sparkles" />
   <div class="about-bg-floral about-bg-floral--left" aria-hidden="true">
     <FloralAccent variant="rose" class="about-float-rose" />
   </div>
   <div class="about-bg-floral about-bg-floral--right" aria-hidden="true">
     <FloralAccent variant="wildflower" class="about-float-wildflower" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--top" aria-hidden="true">
+    <FloralAccent variant="peony" class="about-float-peony" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--bottom" aria-hidden="true">
+    <FloralAccent variant="fern" class="about-float-fern" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--scatter" aria-hidden="true">
+    <FloralAccent variant="petal-scatter" class="about-petal-scatter" />
   </div>
 
   <div class="container">
@@ -91,7 +102,12 @@ import FloralAccent from './FloralAccent.astro';
 <style>
   .about {
     background: var(--bg-primary);
+    position: relative;
     overflow: hidden;
+  }
+
+  :global(.about-sparkles) {
+    z-index: 1;
   }
 
   /* Floating background florals */
@@ -113,6 +129,27 @@ import FloralAccent from './FloralAccent.astro';
     color: var(--accent-green);
   }
 
+  .about-bg-floral--top {
+    top: -20px;
+    right: 15%;
+    color: var(--accent-rose);
+    opacity: 0.4;
+  }
+
+  .about-bg-floral--bottom {
+    bottom: 5%;
+    left: 8%;
+    color: var(--accent-green);
+    opacity: 0.5;
+  }
+
+  .about-bg-floral--scatter {
+    top: 20%;
+    right: 5%;
+    color: var(--accent-gold);
+    opacity: 0.3;
+  }
+
   :global(.about-float-rose) {
     width: 150px;
     height: 150px;
@@ -121,6 +158,21 @@ import FloralAccent from './FloralAccent.astro';
   :global(.about-float-wildflower) {
     width: 120px;
     height: 150px;
+  }
+
+  :global(.about-float-peony) {
+    width: 130px;
+    height: 130px;
+  }
+
+  :global(.about-float-fern) {
+    width: 60px;
+    height: 160px;
+  }
+
+  :global(.about-petal-scatter) {
+    width: 200px;
+    height: 200px;
   }
 
   /* Section title floral flanking */

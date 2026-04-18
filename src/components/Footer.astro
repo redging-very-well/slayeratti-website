@@ -1,5 +1,6 @@
 ---
 import FloralAccent from './FloralAccent.astro';
+import Sparkle from './Sparkle.astro';
 const socialLinks = [
   { name: 'Instagram', icon: '📷', url: '#' },
   { name: 'YouTube', icon: '▶️', url: '#' },
@@ -12,6 +13,7 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer" id="contact">
+  <Sparkle count={12} colors={['#d4af37', '#f0ece2']} class="footer-sparkles" />
   <div class="footer-botanical" aria-hidden="true">
     <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 60 C200 20 400 80 600 40 C800 0 1000 60 1200 30 L1200 120 L0 120Z" fill="var(--bg-card)" opacity="0.5"/>
@@ -63,6 +65,11 @@ const currentYear = new Date().getFullYear();
   .footer {
     position: relative;
     background: var(--bg-card);
+    overflow: hidden;
+  }
+
+  :global(.footer-sparkles) {
+    z-index: 1;
   }
 
   .footer-botanical {

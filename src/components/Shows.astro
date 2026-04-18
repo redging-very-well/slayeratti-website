@@ -1,5 +1,6 @@
 ---
 import FloralAccent from './FloralAccent.astro';
+import Sparkle from './Sparkle.astro';
 const shows = [
   {
     date: '2026-05-15',
@@ -45,10 +46,14 @@ const shows = [
 ---
 
 <section class="shows section" id="shows">
+  <Sparkle count={18} colors={['#d4af37', '#f0ece2', '#3a8fd4']} class="shows-sparkles" />
   <div class="shows-bg-florals" aria-hidden="true">
     <FloralAccent variant="wildflower" class="shows-bg-flower shows-bg-flower--1" />
     <FloralAccent variant="rose" class="shows-bg-flower shows-bg-flower--2" />
-    <FloralAccent variant="wildflower" class="shows-bg-flower shows-bg-flower--3" />
+    <FloralAccent variant="peony" class="shows-bg-flower shows-bg-flower--3" />
+    <FloralAccent variant="fern" class="shows-bg-fern" />
+    <FloralAccent variant="rosebud" class="shows-bg-rosebud shows-bg-rosebud--1" />
+    <FloralAccent variant="rosebud" class="shows-bg-rosebud shows-bg-rosebud--2" />
   </div>
   <div class="container">
     <div class="section-title reveal">
@@ -98,6 +103,84 @@ const shows = [
 <style>
   .shows {
     background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.shows-sparkles) {
+    z-index: 1;
+  }
+
+  .shows-bg-florals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  :global(.shows-bg-flower) {
+    position: absolute;
+  }
+
+  :global(.shows-bg-flower--1) {
+    top: 8%;
+    right: -10px;
+    width: 120px;
+    height: 140px;
+    color: var(--accent-green);
+    opacity: 0.4;
+  }
+
+  :global(.shows-bg-flower--2) {
+    bottom: 12%;
+    left: -15px;
+    width: 130px;
+    height: 130px;
+    color: var(--accent-rose);
+    opacity: 0.35;
+  }
+
+  :global(.shows-bg-flower--3) {
+    top: 45%;
+    right: 5%;
+    width: 110px;
+    height: 110px;
+    color: var(--accent-gold);
+    opacity: 0.3;
+  }
+
+  :global(.shows-bg-fern) {
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+    width: 50px;
+    height: 140px;
+    color: var(--accent-green);
+    opacity: 0.45;
+    transform: rotate(-8deg);
+  }
+
+  :global(.shows-bg-rosebud) {
+    position: absolute;
+  }
+
+  :global(.shows-bg-rosebud--1) {
+    top: 25%;
+    left: 4%;
+    width: 30px;
+    height: 50px;
+    color: var(--accent-rose);
+    opacity: 0.55;
+    transform: rotate(12deg);
+  }
+
+  :global(.shows-bg-rosebud--2) {
+    bottom: 30%;
+    right: 3%;
+    width: 28px;
+    height: 45px;
+    color: var(--accent-gold);
+    opacity: 0.45;
+    transform: rotate(-18deg);
   }
 
   .section-title-floral {
