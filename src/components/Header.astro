@@ -28,6 +28,11 @@ const navLinks = [
 
 <!-- Mobile overlay lives outside header to avoid backdrop-filter containing block -->
 <ul class="nav-links nav-links--mobile" id="nav-links">
+  <li class="mobile-close-wrapper">
+    <button class="mobile-close" aria-label="Close navigation">
+      <span class="close-icon"></span>
+    </button>
+  </li>
   {navLinks.map((link) => (
     <li><a href={link.href} class="nav-link">{link.label}</a></li>
   ))}
@@ -36,7 +41,13 @@ const navLinks = [
 <script>
   const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
   const navLinks = document.getElementById('nav-links')!;
+  const closeBtn = document.querySelector('.mobile-close') as HTMLButtonElement;
   const header = document.getElementById('site-header')!;
+
+  function closeMenu() {
+    toggle.setAttribute('aria-expanded', 'false');
+    navLinks.classList.remove('open');
+  }
 
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
@@ -44,12 +55,11 @@ const navLinks = [
     navLinks.classList.toggle('open');
   });
 
+  closeBtn.addEventListener('click', closeMenu);
+
   // Close menu on link click
   navLinks.querySelectorAll('.nav-link').forEach((link) => {
-    link.addEventListener('click', () => {
-      toggle.setAttribute('aria-expanded', 'false');
-      navLinks.classList.remove('open');
-    });
+    link.addEventListener('click', closeMenu);
   });
 
   // Header background on scroll
@@ -221,6 +231,50 @@ const navLinks = [
 
     .nav-links--mobile .nav-link {
       font-size: 1.25rem;
+    }
+
+    .mobile-close-wrapper {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+    }
+
+    .mobile-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .close-icon {
+      display: block;
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+
+    .close-icon::before,
+    .close-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+    }
+
+    .close-icon::before {
+      transform: rotate(45deg);
+    }
+
+    .close-icon::after {
+      transform: rotate(-45deg);
     }
   }
 </style>
