@@ -18,13 +18,20 @@ const navLinks = [
       <span class="hamburger"></span>
     </button>
 
-    <ul class="nav-links" id="nav-links">
+    <ul class="nav-links nav-links--desktop">
       {navLinks.map((link) => (
         <li><a href={link.href} class="nav-link">{link.label}</a></li>
       ))}
     </ul>
   </nav>
 </header>
+
+<!-- Mobile overlay lives outside header to avoid backdrop-filter containing block -->
+<ul class="nav-links nav-links--mobile" id="nav-links">
+  {navLinks.map((link) => (
+    <li><a href={link.href} class="nav-link">{link.label}</a></li>
+  ))}
+</ul>
 
 <script>
   const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
@@ -105,6 +112,7 @@ const navLinks = [
     display: flex;
     align-items: center;
     gap: var(--space-md);
+    list-style: none;
   }
 
   .nav-link {
@@ -136,9 +144,14 @@ const navLinks = [
     width: 100%;
   }
 
+  /* Hide mobile overlay on desktop, hide desktop links on mobile */
+  .nav-links--mobile {
+    display: none;
+  }
+
   .nav-toggle {
     display: none;
-    z-index: 10;
+    z-index: 1001;
   }
 
   .hamburger {
@@ -180,25 +193,33 @@ const navLinks = [
       display: block;
     }
 
-    .nav-links {
+    .nav-links--desktop {
+      display: none;
+    }
+
+    .nav-links--mobile {
+      display: flex;
       position: fixed;
       inset: 0;
+      z-index: 1000;
       background: rgba(10, 10, 10, 0.97);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       gap: var(--space-lg);
       opacity: 0;
       visibility: hidden;
       transition: opacity var(--transition-med), visibility var(--transition-med);
     }
 
-    .nav-links.open {
+    .nav-links--mobile.open {
       opacity: 1;
       visibility: visible;
     }
 
-    .nav-link {
+    .nav-links--mobile .nav-link {
       font-size: 1.25rem;
     }
   }
