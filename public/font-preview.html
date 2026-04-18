@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slayeratti — Font Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Cinzel:wght@700;800;900&family=Cormorant+Garamond:wght@700&family=Italiana&family=Poiret+One&family=Marcellus&family=Bodoni+Moda:opsz,wght@6..96,700;6..96,800;6..96,900&family=Tenor+Sans&family=Forum&family=Abril+Fatface&family=Yeseva+One&family=Spectral:wght@700;800&family=Libre+Baskerville:wght@700&family=EB+Garamond:wght@700;800&family=Cormorant:wght@700&family=Gloock&family=DM+Serif+Display&family=Crimson+Pro:wght@700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0a0a0a;
+      color: #f0ece2;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .controls-nav button {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #d4af37;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .controls-nav button:hover {
+      background: rgba(212, 175, 55, 0.3);
+    }
+
+    .font-counter {
+      color: #b8b4aa;
+      font-size: 0.85rem;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .font-name {
+      color: #d4af37;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .preview {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    .hero-text {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      padding-bottom: 0.05em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #f0ece2 0%, #d4af37 50%, #f0ece2 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 100% 50%; }
+      50% { background-position: 0% 50%; }
+    }
+
+    .tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 2vw, 1.5rem);
+      font-weight: 400;
+      font-style: italic;
+      color: #b8b4aa;
+      margin-bottom: 3rem;
+    }
+
+    .weight-samples {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .weight-sample {
+      text-align: center;
+    }
+
+    .weight-sample .label {
+      font-size: 0.75rem;
+      color: #78756e;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .weight-sample .text {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      color: #f0ece2;
+    }
+
+    .font-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 2rem;
+    }
+
+    .font-grid button {
+      background: rgba(240, 236, 226, 0.03);
+      border: 1px solid rgba(240, 236, 226, 0.08);
+      color: #b8b4aa;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .font-grid button:hover {
+      border-color: rgba(212, 175, 55, 0.3);
+      color: #f0ece2;
+    }
+
+    .font-grid button.active {
+      border-color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+      color: #d4af37;
+    }
+
+    kbd {
+      display: inline-block;
+      background: rgba(240, 236, 226, 0.08);
+      border: 1px solid rgba(240, 236, 226, 0.15);
+      border-radius: 3px;
+      padding: 0.1em 0.4em;
+      font-size: 0.75rem;
+      color: #b8b4aa;
+      margin-left: 0.25rem;
+    }
+
+    .hint {
+      color: #78756e;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <div class="controls-nav">
+      <button id="prev-btn">← Prev <kbd>←</kbd></button>
+      <span class="font-counter" id="counter">1 / 20</span>
+      <button id="next-btn">Next → <kbd>→</kbd></button>
+    </div>
+    <span class="font-name" id="font-name">Playfair Display</span>
+  </div>
+
+  <div class="preview">
+    <div class="hero-text" id="hero-text">Slayeratti</div>
+    <div class="tagline">Life, music & everything in between</div>
+
+    <div class="weight-samples">
+      <div class="weight-sample">
+        <div class="label">Weight 700</div>
+        <div class="text" id="sample-700" style="font-weight:700">Slayeratti</div>
+      </div>
+      <div class="weight-sample">
+        <div class="label">Weight 800</div>
+        <div class="text" id="sample-800" style="font-weight:800">Slayeratti</div>
+      </div>
+      <div class="weight-sample">
+        <div class="label">Weight 900</div>
+        <div class="text" id="sample-900" style="font-weight:900">Slayeratti</div>
+      </div>
+    </div>
+
+    <p class="hint">Click a font below or use <kbd>←</kbd> <kbd>→</kbd> arrow keys to browse</p>
+
+    <div class="font-grid" id="font-grid"></div>
+  </div>
+
+  <script>
+    const fonts = [
+      { name: 'Playfair Display', family: "'Playfair Display', serif" },
+      { name: 'Cinzel', family: "'Cinzel', serif" },
+      { name: 'Bodoni Moda', family: "'Bodoni Moda', serif" },
+      { name: 'Abril Fatface', family: "'Abril Fatface', serif" },
+      { name: 'Yeseva One', family: "'Yeseva One', serif" },
+      { name: 'Cormorant Garamond', family: "'Cormorant Garamond', serif" },
+      { name: 'Cormorant', family: "'Cormorant', serif" },
+      { name: 'Spectral', family: "'Spectral', serif" },
+      { name: 'EB Garamond', family: "'EB Garamond', serif" },
+      { name: 'Libre Baskerville', family: "'Libre Baskerville', serif" },
+      { name: 'Crimson Pro', family: "'Crimson Pro', serif" },
+      { name: 'DM Serif Display', family: "'DM Serif Display', serif" },
+      { name: 'Fraunces', family: "'Fraunces', serif" },
+      { name: 'Gloock', family: "'Gloock', serif" },
+      { name: 'Sorts Mill Goudy', family: "'Sorts Mill Goudy', serif" },
+      { name: 'Italiana', family: "'Italiana', sans-serif" },
+      { name: 'Poiret One', family: "'Poiret One', sans-serif" },
+      { name: 'Marcellus', family: "'Marcellus', serif" },
+      { name: 'Tenor Sans', family: "'Tenor Sans', sans-serif" },
+      { name: 'Forum', family: "'Forum', serif" },
+    ];
+
+    let current = 0;
+    const heroText = document.getElementById('hero-text');
+    const s700 = document.getElementById('sample-700');
+    const s800 = document.getElementById('sample-800');
+    const s900 = document.getElementById('sample-900');
+    const counter = document.getElementById('counter');
+    const fontName = document.getElementById('font-name');
+    const grid = document.getElementById('font-grid');
+
+    // Build grid buttons
+    fonts.forEach((f, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = f.name;
+      btn.style.fontFamily = f.family;
+      btn.addEventListener('click', () => setFont(i));
+      grid.appendChild(btn);
+    });
+
+    function setFont(index) {
+      current = index;
+      const f = fonts[current];
+      const family = f.family;
+      heroText.style.fontFamily = family;
+      s700.style.fontFamily = family;
+      s800.style.fontFamily = family;
+      s900.style.fontFamily = family;
+      counter.textContent = `${current + 1} / ${fonts.length}`;
+      fontName.textContent = f.name;
+      // Update grid active state
+      grid.querySelectorAll('button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === current);
+      });
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      setFont((current - 1 + fonts.length) % fonts.length);
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      setFont((current + 1) % fonts.length);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') setFont((current - 1 + fonts.length) % fonts.length);
+      if (e.key === 'ArrowRight') setFont((current + 1) % fonts.length);
+    });
+
+    // Initialize
+    setFont(0);
+  </script>
+</body>
+</html>
