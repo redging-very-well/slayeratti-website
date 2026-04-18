@@ -62,17 +62,22 @@ const navLinks = [
     link.addEventListener('click', closeMenu);
   });
 
-  // Header background on scroll
+  // Header visibility on scroll
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
+        const pastTop = window.scrollY > 50;
+        header.classList.toggle('scrolled', pastTop);
+        header.classList.toggle('header-hidden', !pastTop);
         ticking = false;
       });
       ticking = true;
     }
   });
+
+  // Set initial state
+  header.classList.toggle('header-hidden', window.scrollY <= 50);
 </script>
 
 <style>
@@ -85,7 +90,7 @@ const navLinks = [
     height: var(--nav-height);
     display: flex;
     align-items: center;
-    transition: background var(--transition-med), backdrop-filter var(--transition-med);
+    transition: background var(--transition-med), backdrop-filter var(--transition-med), transform var(--transition-med);
   }
 
   .site-header.scrolled {
@@ -199,6 +204,11 @@ const navLinks = [
   }
 
   @media (max-width: 768px) {
+    .site-header.header-hidden {
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+
     .nav-toggle {
       display: block;
     }
