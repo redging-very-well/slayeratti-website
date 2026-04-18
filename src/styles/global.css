@@ -79,6 +79,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+  caret-color: transparent;
 }
 
 img {
