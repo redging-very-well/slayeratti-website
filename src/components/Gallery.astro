@@ -1,0 +1,162 @@
+---
+import FloralAccent from './FloralAccent.astro';
+const galleryItems = [
+  { alt: 'Slayeratti performing live — electric guitar solo under blue stage lights', aspect: 'landscape' },
+  { alt: 'Close-up of the blue Fender Stratocaster with floral stage backdrop', aspect: 'portrait' },
+  { alt: 'Acoustic set — warm amber lighting and intimate venue', aspect: 'landscape' },
+  { alt: 'Behind the scenes — songwriting session with both guitars', aspect: 'square' },
+  { alt: 'Cinematic wide shot — duo performing at sunset outdoor festival', aspect: 'landscape' },
+  { alt: 'Detail shot — Taylor acoustic guitar with botanical decoration', aspect: 'portrait' },
+];
+---
+
+<section class="gallery section" id="gallery">
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-title-floral">
+        <FloralAccent variant="sprig" class="sprig-left" />
+        <h2>Gallery</h2>
+        <FloralAccent variant="sprig" class="sprig-right" />
+      </div>
+      <p class="section-subtitle">Moments from the stage and beyond</p>
+    </div>
+
+    <div class="gallery-grid">
+      {galleryItems.map((item, i) => (
+        <div class={`gallery-item gallery-item--${item.aspect} reveal`} style={`--delay: ${i * 0.08}s`}>
+          <div class="gallery-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="2"/>
+              <circle cx="8" cy="8" r="2"/>
+              <path d="m2 15 5-5 3 3 4-4 8 8"/>
+            </svg>
+            <span class="gallery-placeholder-text">{item.alt}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="floral-divider-wrap" aria-hidden="true">
+    <FloralAccent variant="divider" class="section-floral-divider" />
+  </div>
+</section>
+
+<style>
+  .gallery {
+    background: var(--bg-secondary);
+  }
+
+  .section-title-floral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  :global(.sprig-left) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+    transform: scaleX(-1);
+  }
+
+  :global(.sprig-right) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+  }
+
+  .floral-divider-wrap {
+    text-align: center;
+    padding: var(--space-md) 0 0;
+    color: var(--accent-rose);
+  }
+
+  :global(.section-floral-divider) {
+    width: min(100%, 400px);
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .gallery-item {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: transform var(--transition-fast);
+    transition-delay: var(--delay);
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.02);
+  }
+
+  .gallery-item--landscape {
+    grid-column: span 2;
+  }
+
+  .gallery-item--portrait {
+    grid-row: span 2;
+  }
+
+  .gallery-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--bg-card);
+    border: 1px dashed rgba(240, 236, 226, 0.1);
+    border-radius: var(--border-radius);
+    min-height: 200px;
+    height: 100%;
+    text-align: center;
+    color: var(--text-muted);
+    transition: border-color var(--transition-fast);
+  }
+
+  .gallery-item:hover .gallery-placeholder {
+    border-color: rgba(240, 236, 226, 0.2);
+  }
+
+  .gallery-placeholder svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.3;
+  }
+
+  .gallery-placeholder-text {
+    font-size: var(--fs-small);
+    max-width: 200px;
+    line-height: 1.4;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-item--landscape {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-item--landscape,
+    .gallery-item--portrait {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+</style>

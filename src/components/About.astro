@@ -1,0 +1,287 @@
+---
+import FloralAccent from './FloralAccent.astro';
+---
+
+<section class="about section" id="about">
+  <div class="about-bg-floral about-bg-floral--left" aria-hidden="true">
+    <FloralAccent variant="rose" class="about-float-rose" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--right" aria-hidden="true">
+    <FloralAccent variant="wildflower" class="about-float-wildflower" />
+  </div>
+
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-title-floral">
+        <FloralAccent variant="sprig" class="sprig-left" />
+        <h2>The Story</h2>
+        <FloralAccent variant="sprig" class="sprig-right" />
+      </div>
+      <p class="section-subtitle">Two guitars, one vision</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          <strong>Slayeratti</strong> is the union of electric fire and acoustic soul — a duo
+          that celebrates the excellence of life, music, and everything in between. The name
+          itself is our manifesto: <em>"slayer"</em> — to do brilliantly at what you love,
+          and <em>"atti"</em> — the glittering brilliance of those who dare to shine.
+        </p>
+        <p>
+          We write, sing, and perform original music that moves between whispered
+          fingerpicked ballads and soaring electric anthems. Our songs explore the full
+          spectrum of human experience — the tender, the triumphant, the melancholy,
+          and the magnificent.
+        </p>
+      </div>
+
+      <div class="about-members">
+        <div class="member-card reveal">
+          <FloralAccent variant="corner-tl" class="card-corner card-corner--tl" />
+          <FloralAccent variant="corner-br" class="card-corner card-corner--br" />
+          <div class="member-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="32" y="10" width="16" height="45" rx="8" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="40" y1="55" x2="40" y2="75" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="40" cy="30" r="3" stroke="currentColor" stroke-width="1"/>
+              <circle cx="40" cy="40" r="3" stroke="currentColor" stroke-width="1"/>
+              <line x1="28" y1="25" x2="32" y2="25" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+              <line x1="48" y1="25" x2="52" y2="25" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+            </svg>
+          </div>
+          <h3>Electric Soul</h3>
+          <p class="member-instrument">Blue Fender Stratocaster</p>
+          <p class="member-desc">
+            From searing solos to ambient textures, the Stratocaster carves
+            through every emotion with clarity and power. Vocalist and songwriter.
+          </p>
+        </div>
+
+        <div class="member-card reveal">
+          <FloralAccent variant="corner-tl" class="card-corner card-corner--tl" />
+          <FloralAccent variant="corner-br" class="card-corner card-corner--br" />
+          <div class="member-icon acoustic-icon">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <ellipse cx="40" cy="42" rx="18" ry="22" stroke="currentColor" stroke-width="1.5"/>
+              <ellipse cx="40" cy="44" rx="6" ry="5" stroke="currentColor" stroke-width="1"/>
+              <line x1="40" y1="20" x2="40" y2="8" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="35" y="5" width="10" height="5" rx="2" stroke="currentColor" stroke-width="1"/>
+              <line x1="37" y1="30" x2="37" y2="56" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+              <line x1="40" y1="28" x2="40" y2="56" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+              <line x1="43" y1="30" x2="43" y2="56" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+            </svg>
+          </div>
+          <h3>Acoustic Heart</h3>
+          <p class="member-instrument">Taylor Acoustic</p>
+          <p class="member-desc">
+            Fingerpicked intimacy and rhythmic strumming weave the warm foundation
+            beneath every song. Vocalist and songwriter.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="floral-divider-wrap" aria-hidden="true">
+    <FloralAccent variant="divider" class="section-floral-divider" />
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--bg-primary);
+    overflow: hidden;
+  }
+
+  /* Floating background florals */
+  .about-bg-floral {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .about-bg-floral--left {
+    top: 10%;
+    left: -20px;
+    color: var(--accent-rose);
+  }
+
+  .about-bg-floral--right {
+    bottom: 15%;
+    right: -10px;
+    color: var(--accent-green);
+  }
+
+  :global(.about-float-rose) {
+    width: 150px;
+    height: 150px;
+  }
+
+  :global(.about-float-wildflower) {
+    width: 120px;
+    height: 150px;
+  }
+
+  /* Section title floral flanking */
+  .section-title-floral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  :global(.sprig-left) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+    transform: scaleX(-1);
+  }
+
+  :global(.sprig-right) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+  }
+
+  /* Card corner florals */
+  :global(.card-corner) {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    transition: opacity var(--transition-fast);
+  }
+
+  :global(.card-corner--tl) {
+    top: -4px;
+    left: -4px;
+  }
+
+  :global(.card-corner--br) {
+    bottom: -4px;
+    right: -4px;
+  }
+
+  .member-card:hover :global(.card-corner) {
+    opacity: 1;
+  }
+
+  .member-card:first-child :global(.card-corner) {
+    color: var(--accent-blue);
+  }
+
+  .member-card:last-child :global(.card-corner) {
+    color: var(--accent-gold);
+  }
+
+  /* Floral section divider */
+  .floral-divider-wrap {
+    text-align: center;
+    padding: var(--space-md) 0 0;
+    color: var(--accent-rose);
+  }
+
+  :global(.section-floral-divider) {
+    width: min(100%, 400px);
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .about-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .about-text {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-text p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-text strong {
+    color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  .about-text em {
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  .about-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .member-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid rgba(240, 236, 226, 0.06);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    text-align: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .member-card:first-child:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 8px 30px var(--accent-blue-glow);
+  }
+
+  .member-card:last-child:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 8px 30px var(--accent-gold-glow);
+  }
+
+  .member-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-sm);
+    color: var(--accent-blue);
+  }
+
+  .acoustic-icon {
+    color: var(--accent-gold);
+  }
+
+  .member-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .member-card h3 {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-xs);
+  }
+
+  .member-instrument {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-sm);
+  }
+
+  .member-desc {
+    color: var(--text-secondary);
+    font-size: var(--fs-small);
+    line-height: 1.6;
+  }
+</style>

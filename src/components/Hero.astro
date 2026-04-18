@@ -1,0 +1,211 @@
+---
+import FloralAccent from './FloralAccent.astro';
+---
+
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="hero-gradient"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-botanical hero-botanical--left" aria-hidden="true">
+      <FloralAccent variant="vine-left" />
+    </div>
+
+    <div class="hero-botanical hero-botanical--right" aria-hidden="true">
+      <FloralAccent variant="vine-right" />
+    </div>
+
+    <p class="hero-overline">Celebrating the excellence of</p>
+    <h1 class="hero-title shimmer-text">Slayeratti</h1>
+    <p class="hero-tagline">Life, music & everything in between</p>
+
+    <div class="hero-cta">
+      <a href="#music" class="btn btn-primary">Listen Now</a>
+      <a href="#shows" class="btn btn-outline">Upcoming Shows</a>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    let particles: { x: number; y: number; vx: number; vy: number; size: number; opacity: number; color: string }[] = [];
+    let animationId: number;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticles() {
+      const count = Math.min(60, Math.floor(window.innerWidth / 20));
+      const colors = ['rgba(212,175,55,', 'rgba(58,143,212,', 'rgba(181,102,122,'];
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 2 + 0.5,
+        opacity: Math.random() * 0.5 + 0.1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      }));
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.color}${p.opacity})`;
+        ctx.fill();
+      });
+      animationId = requestAnimationFrame(animate);
+    }
+
+    if (!prefersReducedMotion) {
+      resize();
+      createParticles();
+      animate();
+      window.addEventListener('resize', () => { resize(); createParticles(); });
+    }
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  #particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, var(--accent-blue-glow) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, var(--accent-rose-glow) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(26, 26, 46, 0.8) 0%, transparent 60%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--space-md);
+  }
+
+  .hero-botanical {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60vh;
+    max-height: 500px;
+    color: var(--accent-green);
+    pointer-events: none;
+  }
+
+  .hero-botanical--left {
+    left: -2rem;
+  }
+
+  .hero-botanical--right {
+    right: -2rem;
+  }
+
+  .hero-botanical :global(svg) {
+    height: 100%;
+    width: auto;
+  }
+
+  .hero-overline {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-hero);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-tagline {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h3);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--accent-gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.8; transform: scaleY(1.2); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-botanical { display: none; }
+
+    .hero-cta {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

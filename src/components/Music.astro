@@ -1,0 +1,311 @@
+---
+import FloralAccent from './FloralAccent.astro';
+const tracks = [
+  {
+    title: 'Embers in the Current',
+    type: 'Acoustic',
+    typeClass: 'acoustic',
+    description: 'A fingerpicked meditation on love that persists through change. Delicate Taylor arpeggios beneath layered harmonies.',
+    duration: '4:23',
+  },
+  {
+    title: 'Neon Meridian',
+    type: 'Electric',
+    typeClass: 'electric',
+    description: 'Driving Stratocaster riffs meet urgent vocals in a high-energy anthem about chasing what sets your soul on fire.',
+    duration: '3:47',
+  },
+  {
+    title: 'Still Water Hymn',
+    type: 'Ambient',
+    typeClass: 'ambient',
+    description: 'Atmospheric and cinematic — reverb-soaked guitars drift through a landscape of quiet reflection and gentle resolve.',
+    duration: '5:12',
+  },
+  {
+    title: 'Gilded & Gone',
+    type: 'Acoustic',
+    typeClass: 'acoustic',
+    description: 'Bittersweet strumming and intimate dual vocals exploring the beauty in letting go. Raw, honest, luminous.',
+    duration: '3:58',
+  },
+  {
+    title: 'Voltage & Vine',
+    type: 'Electric',
+    typeClass: 'electric',
+    description: 'A blazing solo-driven track that channels the collision of nature and electricity — floral imagery meets overdriven power.',
+    duration: '4:05',
+  },
+  {
+    title: 'The Quiet Between',
+    type: 'Ambient',
+    typeClass: 'ambient',
+    description: 'Moody, slow-burning instrumental. Swells of clean electric guitar intertwine with harmonic whispers from the acoustic.',
+    duration: '6:30',
+  },
+];
+
+const platforms = [
+  { name: 'Spotify', icon: '♫', url: '#' },
+  { name: 'Apple Music', icon: '♪', url: '#' },
+  { name: 'YouTube', icon: '▶', url: '#' },
+  { name: 'SoundCloud', icon: '☁', url: '#' },
+];
+---
+
+<section class="music section" id="music">
+  <div class="music-floral-bg" aria-hidden="true">
+    <FloralAccent variant="rose" class="music-bg-rose music-bg-rose--1" />
+    <FloralAccent variant="wildflower" class="music-bg-rose music-bg-rose--2" />
+  </div>
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-title-floral">
+        <FloralAccent variant="sprig" class="sprig-left" />
+        <h2>Our Music</h2>
+        <FloralAccent variant="sprig" class="sprig-right" />
+      </div>
+      <p class="section-subtitle">From whispered ballads to electric anthems</p>
+    </div>
+
+    <div class="track-list">
+      {tracks.map((track, i) => (
+        <article class={`track-item reveal`} style={`--delay: ${i * 0.1}s`}>
+          <div class="track-number">{String(i + 1).padStart(2, '0')}</div>
+          <div class="track-info">
+            <h3 class="track-title">{track.title}</h3>
+            <p class="track-desc">{track.description}</p>
+          </div>
+          <span class={`track-type track-type--${track.typeClass}`}>{track.type}</span>
+          <span class="track-duration">{track.duration}</span>
+        </article>
+      ))}
+    </div>
+
+    <div class="platforms reveal">
+      <p class="platforms-label">Listen on</p>
+      <div class="platform-links">
+        {platforms.map((p) => (
+          <a href={p.url} class="platform-link" aria-label={`Listen on ${p.name}`}>
+            <span class="platform-icon">{p.icon}</span>
+            <span class="platform-name">{p.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="floral-divider-wrap" aria-hidden="true">
+      <FloralAccent variant="divider" class="section-floral-divider" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .music {
+    background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .music-floral-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  :global(.music-bg-rose) {
+    position: absolute;
+  }
+
+  :global(.music-bg-rose--1) {
+    top: 5%;
+    right: -15px;
+    width: 160px;
+    height: 160px;
+    color: var(--accent-rose);
+  }
+
+  :global(.music-bg-rose--2) {
+    bottom: 10%;
+    left: -10px;
+    width: 130px;
+    height: 160px;
+    color: var(--accent-gold);
+  }
+
+  .music .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-title-floral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  :global(.sprig-left) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+    transform: scaleX(-1);
+  }
+
+  :global(.sprig-right) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+  }
+
+  .floral-divider-wrap {
+    text-align: center;
+    padding: var(--space-md) 0 0;
+    color: var(--accent-green);
+  }
+
+  :global(.section-floral-divider) {
+    width: min(100%, 400px);
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .track-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .track-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+    transition-delay: var(--delay);
+    cursor: default;
+  }
+
+  .track-item:hover {
+    background: var(--bg-elevated);
+    transform: translateX(4px);
+  }
+
+  .track-number {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 2.5rem;
+  }
+
+  .track-title {
+    font-size: var(--fs-body);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .track-desc {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .track-type {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .track-type--electric {
+    background: var(--accent-blue-glow);
+    color: var(--accent-blue);
+  }
+
+  .track-type--acoustic {
+    background: var(--accent-gold-glow);
+    color: var(--accent-gold);
+  }
+
+  .track-type--ambient {
+    background: rgba(61, 122, 85, 0.2);
+    color: var(--accent-green);
+  }
+
+  .track-duration {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 3rem;
+    text-align: right;
+  }
+
+  .platforms {
+    text-align: center;
+  }
+
+  .platforms-label {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .platform-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .platform-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(240, 236, 226, 0.1);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    font-size: var(--fs-small);
+    transition: all var(--transition-fast);
+  }
+
+  .platform-link:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: var(--accent-gold-glow);
+  }
+
+  .platform-icon {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .track-item {
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-sm);
+    }
+
+    .track-desc {
+      display: none;
+    }
+
+    .track-duration {
+      display: none;
+    }
+
+    .track-type {
+      font-size: 0.65rem;
+    }
+  }
+</style>

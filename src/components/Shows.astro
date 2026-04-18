@@ -1,0 +1,232 @@
+---
+import FloralAccent from './FloralAccent.astro';
+const shows = [
+  {
+    date: '2026-05-15',
+    day: '15',
+    month: 'May',
+    venue: 'The Blue Note Lounge',
+    city: 'Melbourne, VIC',
+    type: 'Intimate Acoustic Set',
+    ticketUrl: '#',
+    status: 'on-sale',
+  },
+  {
+    date: '2026-06-07',
+    day: '07',
+    month: 'Jun',
+    venue: 'Botanical Garden Sessions',
+    city: 'Sydney, NSW',
+    type: 'Full Band Performance',
+    ticketUrl: '#',
+    status: 'on-sale',
+  },
+  {
+    date: '2026-06-21',
+    day: '21',
+    month: 'Jun',
+    venue: 'Electric Avenue',
+    city: 'Brisbane, QLD',
+    type: 'Electric Showcase',
+    ticketUrl: '#',
+    status: 'on-sale',
+  },
+  {
+    date: '2026-07-12',
+    day: '12',
+    month: 'Jul',
+    venue: 'The Vine & Vessel',
+    city: 'Adelaide, SA',
+    type: 'Unplugged Evening',
+    ticketUrl: '#',
+    status: 'coming-soon',
+  },
+];
+---
+
+<section class="shows section" id="shows">
+  <div class="shows-bg-florals" aria-hidden="true">
+    <FloralAccent variant="wildflower" class="shows-bg-flower shows-bg-flower--1" />
+    <FloralAccent variant="rose" class="shows-bg-flower shows-bg-flower--2" />
+    <FloralAccent variant="wildflower" class="shows-bg-flower shows-bg-flower--3" />
+  </div>
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-title-floral">
+        <FloralAccent variant="sprig" class="sprig-left" />
+        <h2>Live Shows</h2>
+        <FloralAccent variant="sprig" class="sprig-right" />
+      </div>
+      <p class="section-subtitle">Come celebrate with us</p>
+    </div>
+
+    <div class="shows-list">
+      {shows.map((show, i) => (
+        <article class="show-item reveal" style={`--delay: ${i * 0.1}s`}>
+          <div class="show-date">
+            <span class="show-day">{show.day}</span>
+            <span class="show-month">{show.month}</span>
+          </div>
+
+          <div class="show-details">
+            <h3 class="show-venue">{show.venue}</h3>
+            <p class="show-meta">
+              <span class="show-city">{show.city}</span>
+              <span class="show-divider">·</span>
+              <span class="show-type">{show.type}</span>
+            </p>
+          </div>
+
+          <div class="show-action">
+            {show.status === 'on-sale' ? (
+              <a href={show.ticketUrl} class="btn btn-primary btn-sm">Tickets</a>
+            ) : (
+              <span class="show-coming-soon">Coming Soon</span>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="shows-cta reveal">
+      <p>Want us to play at your venue or event?</p>
+      <a href="#contact" class="btn btn-outline">Book Us</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .shows {
+    background: var(--bg-primary);
+  }
+
+  .section-title-floral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  :global(.sprig-left) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+    transform: scaleX(-1);
+  }
+
+  :global(.sprig-right) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+  }
+
+  .shows-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .show-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-card);
+    border: 1px solid rgba(240, 236, 226, 0.04);
+    border-radius: var(--border-radius);
+    transition: all var(--transition-fast);
+    transition-delay: var(--delay);
+  }
+
+  .show-item:hover {
+    border-color: rgba(240, 236, 226, 0.1);
+    background: var(--bg-elevated);
+  }
+
+  .show-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(212, 175, 55, 0.08);
+    border-radius: var(--border-radius);
+  }
+
+  .show-day {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-gold);
+  }
+
+  .show-month {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .show-venue {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.25rem;
+  }
+
+  .show-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .show-divider {
+    color: var(--text-muted);
+    opacity: 0.4;
+  }
+
+  .show-type {
+    color: var(--accent-blue);
+  }
+
+  .btn-sm {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.75rem;
+  }
+
+  .show-coming-soon {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px dashed rgba(240, 236, 226, 0.15);
+    border-radius: var(--border-radius);
+  }
+
+  .shows-cta {
+    text-align: center;
+  }
+
+  .shows-cta p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .show-item {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-sm);
+    }
+
+    .show-action {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+  }
+</style>

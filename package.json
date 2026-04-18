@@ -1,0 +1,18 @@
+{
+  "name": "slayeratti-website",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Official website for Slayeratti — celebrating the excellence of life, music, and everything in between",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/fix-paths.mjs",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^6.1.7"
+  }
+}
