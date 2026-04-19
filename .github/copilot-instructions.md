@@ -6,7 +6,7 @@ This is the official website for **Slayeratti**, a guitar duo who write, sing, a
 
 ### Band Identity
 
-- **Name meaning**: "Slayer" means "to do well at" and "atti" is akin to "glitterati". Slayeratti celebrates the excellence of life, music, and everything in between.
+- **Name meaning**: "Slayer" means "to do well at" and "atti" is akin to "glitterati". Slayeratti celebrates the excellence of music, life, and everything in between.
 - **Members**:
   - Male electric guitar player (blue Fender Stratocaster)
   - Female acoustic guitar player (Taylor acoustic)

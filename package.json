@@ -2,7 +2,7 @@
   "name": "slayeratti-website",
   "type": "module",
   "version": "1.0.0",
-  "description": "Official website for Slayeratti — life, music, and everything in between",
+  "description": "Official website for Slayeratti — music, life, and everything in between",
   "engines": {
     "node": ">=22.12.0"
   },
