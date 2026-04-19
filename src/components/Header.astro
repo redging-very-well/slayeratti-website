@@ -11,7 +11,7 @@ const navLinks = [
 <header class="site-header" id="site-header">
   <nav class="nav container">
     <a href="#hero" class="nav-logo">
-      <span class="logo-text">Slayeratti</span>
+      <span class="logo-text"><span class="logo-slayer">Slayer</span><span class="logo-atti">atti</span></span>
     </a>
 
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
@@ -113,14 +113,25 @@ const navLinks = [
   }
 
   .logo-text {
-    font-family: 'Forum', serif;
     font-size: 1.6rem;
     font-weight: 400;
-    letter-spacing: 0.08em;
     background: linear-gradient(135deg, var(--text-primary), var(--accent-gold));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .logo-slayer {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 0.01em;
+  }
+
+  .logo-atti {
+    font-family: 'Forum', serif;
+    font-weight: 400;
+    letter-spacing: 0.08em;
   }
 
   .nav-links {

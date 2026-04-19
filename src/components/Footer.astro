@@ -24,7 +24,7 @@ const currentYear = new Date().getFullYear();
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand reveal">
-          <h2 class="footer-logo shimmer-text">Slayeratti</h2>
+          <h2 class="footer-logo shimmer-text"><span class="footer-logo-slayer">Slayer</span><span class="footer-logo-atti">atti</span></h2>
           <p class="footer-tagline">life, music, and everything in between.</p>
         </div>
 
@@ -102,11 +102,25 @@ const currentYear = new Date().getFullYear();
   }
 
   .footer-logo {
-    font-family: 'Forum', serif;
     font-size: var(--fs-h1);
     font-weight: 400;
-    letter-spacing: 0.08em;
     margin-bottom: var(--space-xs);
+    text-shadow:
+      0 0 40px rgba(212, 175, 55, 0.25),
+      0 0 80px rgba(212, 175, 55, 0.1);
+  }
+
+  .footer-logo-slayer {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: 1.15em;
+    letter-spacing: 0.01em;
+  }
+
+  .footer-logo-atti {
+    font-family: 'Forum', serif;
+    font-weight: 400;
+    letter-spacing: 0.08em;
   }
 
   .footer-tagline {

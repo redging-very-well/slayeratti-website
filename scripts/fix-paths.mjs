@@ -25,9 +25,14 @@ async function fixPaths() {
 
     // Convert absolute paths starting with / to relative ./ paths
     // Matches href="/...", src="/...", content="/...", url(/)
-    content = content.replace(/((?:href|src|content|poster|srcset)=")\/(?!\/)/g, '$1./');
+    content = content.replace(/((?:href|src|content|poster)=")\/(?!\/)/g, '$1./');
     content = content.replace(/(url\()\/(?!\/)/g, '$1./');
 
+    // Fix all URLs inside srcset (multiple comma-separated entries)
+    content = content.replace(/srcset="([^"]*)"/g, (_match, srcsetValue) => {
+      const fixed = srcsetValue.replace(/(^|,\s*)\/(?!\/)/g, '$1./');
+      return `srcset="${fixed}"`;
+    });
     if (content !== original) {
       await writeFile(file, content, 'utf-8');
       console.log(`  ✓ Fixed paths in ${file.replace(distDir, 'dist')}`);
