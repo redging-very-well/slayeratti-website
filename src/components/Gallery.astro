@@ -1,13 +1,26 @@
 ---
+import { Image } from 'astro:assets';
 import FloralAccent from './FloralAccent.astro';
 import Sparkle from './Sparkle.astro';
+
+import dsc0099 from '../media/images/DSC_0099.JPG';
+import dsc0384 from '../media/images/DSC_0384.JPG';
+import img0410 from '../media/images/IMG_0410.JPG';
+import img1476 from '../media/images/IMG_1476.JPG';
+import img2489 from '../media/images/IMG_2489.JPG';
+import img2490 from '../media/images/IMG_2490.JPG';
+import img2491 from '../media/images/IMG_2491.JPG';
+import img2985 from '../media/images/IMG_2985.jpeg';
+
 const galleryItems = [
-  { alt: 'Slayeratti performing live — electric guitar solo under blue stage lights', aspect: 'landscape' },
-  { alt: 'Close-up of the blue Fender Stratocaster with floral stage backdrop', aspect: 'portrait' },
-  { alt: 'Acoustic set — warm amber lighting and intimate venue', aspect: 'landscape' },
-  { alt: 'Behind the scenes — songwriting session with both guitars', aspect: 'square' },
-  { alt: 'Cinematic wide shot — duo performing at sunset outdoor festival', aspect: 'landscape' },
-  { alt: 'Detail shot — Taylor acoustic guitar with botanical decoration', aspect: 'portrait' },
+  { src: dsc0099, alt: 'Slayeratti performing live on stage', aspect: 'landscape' },
+  { src: img2985, alt: 'Portrait shot from a Slayeratti performance', aspect: 'portrait' },
+  { src: dsc0384, alt: 'Slayeratti duo in the spotlight', aspect: 'square' },
+  { src: img1476, alt: 'Intimate acoustic set under warm lights', aspect: 'square' },
+  { src: img0410, alt: 'Electric energy — Slayeratti on stage', aspect: 'landscape' },
+  { src: img2489, alt: 'Cinematic wide shot of a live performance', aspect: 'landscape' },
+  { src: img2490, alt: 'Slayeratti in full flight on stage', aspect: 'square' },
+  { src: img2491, alt: 'Slayeratti — music, life, and everything in between', aspect: 'square' },
 ];
 ---
 
@@ -32,14 +45,16 @@ const galleryItems = [
     <div class="gallery-grid">
       {galleryItems.map((item, i) => (
         <div class={`gallery-item gallery-item--${item.aspect} reveal`} style={`--delay: ${i * 0.08}s`}>
-          <div class="gallery-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="2"/>
-              <circle cx="8" cy="8" r="2"/>
-              <path d="m2 15 5-5 3 3 4-4 8 8"/>
-            </svg>
-            <span class="gallery-placeholder-text">{item.alt}</span>
-          </div>
+          <Image
+            src={item.src}
+            alt={item.alt}
+            widths={[400, 800, 1200]}
+            sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+            format="webp"
+            quality={80}
+            loading={i < 2 ? 'eager' : 'lazy'}
+            class="gallery-image"
+          />
         </div>
       ))}
     </div>
@@ -146,6 +161,8 @@ const galleryItems = [
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 280px;
+    grid-auto-flow: dense;
     gap: var(--space-sm);
   }
 
@@ -160,6 +177,19 @@ const galleryItems = [
     transform: scale(1.02);
   }
 
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--border-radius);
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+  }
+
   .gallery-item--landscape {
     grid-column: span 2;
   }
@@ -168,43 +198,10 @@ const galleryItems = [
     grid-row: span 2;
   }
 
-  .gallery-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    background: var(--bg-card);
-    border: 1px dashed rgba(240, 236, 226, 0.1);
-    border-radius: var(--border-radius);
-    min-height: 200px;
-    height: 100%;
-    text-align: center;
-    color: var(--text-muted);
-    transition: border-color var(--transition-fast);
-  }
-
-  .gallery-item:hover .gallery-placeholder {
-    border-color: rgba(240, 236, 226, 0.2);
-  }
-
-  .gallery-placeholder svg {
-    width: 48px;
-    height: 48px;
-    opacity: 0.3;
-  }
-
-  .gallery-placeholder-text {
-    font-size: var(--fs-small);
-    max-width: 200px;
-    line-height: 1.4;
-    opacity: 0.6;
-  }
-
   @media (max-width: 768px) {
     .gallery-grid {
       grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 240px;
     }
 
     .gallery-item--landscape {
@@ -215,6 +212,7 @@ const galleryItems = [
   @media (max-width: 480px) {
     .gallery-grid {
       grid-template-columns: 1fr;
+      grid-auto-rows: 250px;
     }
 
     .gallery-item--landscape,
