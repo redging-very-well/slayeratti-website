@@ -3,44 +3,13 @@ import FloralAccent from './FloralAccent.astro';
 import Sparkle from './Sparkle.astro';
 const shows = [
   {
-    date: '2026-05-15',
-    day: '15',
+    date: '2026-05-20',
+    day: '20',
     month: 'May',
-    venue: 'The Blue Note Lounge',
-    city: 'Melbourne, VIC',
-    type: 'Intimate Acoustic Set',
-    ticketUrl: '#',
-    status: 'on-sale',
-  },
-  {
-    date: '2026-06-07',
-    day: '07',
-    month: 'Jun',
-    venue: 'Botanical Garden Sessions',
-    city: 'Sydney, NSW',
-    type: 'Full Band Performance',
-    ticketUrl: '#',
-    status: 'on-sale',
-  },
-  {
-    date: '2026-06-21',
-    day: '21',
-    month: 'Jun',
-    venue: 'Electric Avenue',
-    city: 'Brisbane, QLD',
-    type: 'Electric Showcase',
-    ticketUrl: '#',
-    status: 'on-sale',
-  },
-  {
-    date: '2026-07-12',
-    day: '12',
-    month: 'Jul',
-    venue: 'The Vine & Vessel',
-    city: 'Adelaide, SA',
-    type: 'Unplugged Evening',
-    ticketUrl: '#',
-    status: 'coming-soon',
+    venue: 'Claire Inn',
+    description: 'Slayeratti grand unveiling! 🎸🎤',
+    time: '8:30 PM',
+    status: 'free',
   },
 ];
 ---
@@ -76,18 +45,14 @@ const shows = [
           <div class="show-details">
             <h3 class="show-venue">{show.venue}</h3>
             <p class="show-meta">
-              <span class="show-city">{show.city}</span>
+              <span class="show-time">{show.time}</span>
               <span class="show-divider">·</span>
-              <span class="show-type">{show.type}</span>
+              <span class="show-description">{show.description}</span>
             </p>
           </div>
 
           <div class="show-action">
-            {show.status === 'on-sale' ? (
-              <a href={show.ticketUrl} class="btn btn-primary btn-sm">Tickets</a>
-            ) : (
-              <span class="show-coming-soon">Coming Soon</span>
-            )}
+            <span class="show-free">Free Event</span>
           </div>
         </article>
       ))}
