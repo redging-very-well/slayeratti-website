@@ -18,7 +18,7 @@ pnpm-debug.log*
 .env.production
 
 # design assets (local only)
-design-assets/
+assets/
 
 # macOS-specific files
 .DS_Store
