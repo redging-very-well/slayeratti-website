@@ -1,55 +1,21 @@
 ---
 import FloralAccent from './FloralAccent.astro';
 import Sparkle from './Sparkle.astro';
+
+import haberdasheryAudio from '../media/audio/Haberdashery (Scott Point 2026).m4a';
+import cruisinAudio from '../media/audio/Cruisin (Scott Point 2026).m4a';
+import firestarAudio from '../media/audio/Firestar (Scott Point 2026).m4a';
+
 const tracks = [
-  {
-    title: 'Embers in the Current',
-    type: 'Acoustic',
-    typeClass: 'acoustic',
-    description: 'A fingerpicked meditation on love that persists through change. Delicate Taylor arpeggios beneath layered harmonies.',
-    duration: '4:23',
-  },
-  {
-    title: 'Neon Meridian',
-    type: 'Electric',
-    typeClass: 'electric',
-    description: 'Driving Stratocaster riffs meet urgent vocals in a high-energy anthem about chasing what sets your soul on fire.',
-    duration: '3:47',
-  },
-  {
-    title: 'Still Water Hymn',
-    type: 'Ambient',
-    typeClass: 'ambient',
-    description: 'Atmospheric and cinematic — reverb-soaked guitars drift through a landscape of quiet reflection and gentle resolve.',
-    duration: '5:12',
-  },
-  {
-    title: 'Gilded & Gone',
-    type: 'Acoustic',
-    typeClass: 'acoustic',
-    description: 'Bittersweet strumming and intimate dual vocals exploring the beauty in letting go. Raw, honest, luminous.',
-    duration: '3:58',
-  },
-  {
-    title: 'Voltage & Vine',
-    type: 'Electric',
-    typeClass: 'electric',
-    description: 'A blazing solo-driven track that channels the collision of nature and electricity — floral imagery meets overdriven power.',
-    duration: '4:05',
-  },
-  {
-    title: 'The Quiet Between',
-    type: 'Ambient',
-    typeClass: 'ambient',
-    description: 'Moody, slow-burning instrumental. Swells of clean electric guitar intertwine with harmonic whispers from the acoustic.',
-    duration: '6:30',
-  },
+  { title: 'Haberdashery (Scott Point 2026)', src: haberdasheryAudio },
+  { title: "Cruisin' (Scott Point 2026)", src: cruisinAudio },
+  { title: 'Firestar (Scott Point 2026)', src: firestarAudio },
 ];
 
 const platforms = [
   { name: 'Spotify', icon: '♫', url: '#' },
   { name: 'Apple Music', icon: '♪', url: '#' },
-  { name: 'YouTube', icon: '▶', url: '#' },
+  // { name: 'YouTube', icon: '▶', url: '#' },
   { name: 'SoundCloud', icon: '☁', url: '#' },
 ];
 ---
@@ -69,7 +35,7 @@ const platforms = [
     <div class="section-title reveal">
       <div class="section-title-floral">
         <FloralAccent variant="sprig" class="sprig-left" />
-        <h2>Our Music</h2>
+        <h2>Recent Tracks</h2>
         <FloralAccent variant="sprig" class="sprig-right" />
       </div>
       <p class="section-subtitle">From whispered ballads to electric anthems</p>
@@ -77,14 +43,22 @@ const platforms = [
 
     <div class="track-list">
       {tracks.map((track, i) => (
-        <article class={`track-item reveal`} style={`--delay: ${i * 0.1}s`}>
+        <article class="track-item reveal" style={`--delay: ${i * 0.1}s`}>
           <div class="track-number">{String(i + 1).padStart(2, '0')}</div>
           <div class="track-info">
             <h3 class="track-title">{track.title}</h3>
-            <p class="track-desc">{track.description}</p>
+            <div class="player" data-src={track.src}>
+              <button class="player-play" aria-label="Play">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+              </button>
+              <span class="player-time player-current">0:00</span>
+              <div class="player-progress" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                <div class="player-progress-fill"></div>
+              </div>
+              <span class="player-time player-duration">0:00</span>
+            </div>
           </div>
-          <span class={`track-type track-type--${track.typeClass}`}>{track.type}</span>
-          <span class="track-duration">{track.duration}</span>
         </article>
       ))}
     </div>
@@ -110,6 +84,127 @@ const platforms = [
     </div>
   </div>
 </section>
+
+<script>
+  function formatTime(s: number): string {
+    if (!isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  }
+
+  let currentAudio: HTMLAudioElement | null = null;
+  let currentPlayer: HTMLElement | null = null;
+
+  document.querySelectorAll<HTMLElement>('.player').forEach((player) => {
+    const src = player.dataset.src!;
+    const playBtn = player.querySelector<HTMLButtonElement>('.player-play')!;
+    const iconPlay = player.querySelector<SVGElement>('.icon-play')!;
+    const iconPause = player.querySelector<SVGElement>('.icon-pause')!;
+    const progressBar = player.querySelector<HTMLElement>('.player-progress')!;
+    const progressFill = player.querySelector<HTMLElement>('.player-progress-fill')!;
+    const currentTime = player.querySelector<HTMLElement>('.player-current')!;
+    const durationEl = player.querySelector<HTMLElement>('.player-duration')!;
+
+    let audio: HTMLAudioElement | null = null;
+    let dragging = false;
+
+    function getAudio(): HTMLAudioElement {
+      if (!audio) {
+        audio = new Audio(src);
+        audio.preload = 'metadata';
+
+        audio.addEventListener('loadedmetadata', () => {
+          durationEl.textContent = formatTime(audio!.duration);
+        });
+
+        audio.addEventListener('timeupdate', () => {
+          if (dragging) return;
+          const pct = audio!.duration ? (audio!.currentTime / audio!.duration) * 100 : 0;
+          progressFill.style.width = `${pct}%`;
+          currentTime.textContent = formatTime(audio!.currentTime);
+        });
+
+        audio.addEventListener('ended', () => {
+          iconPlay.style.display = '';
+          iconPause.style.display = 'none';
+          progressFill.style.width = '0%';
+          currentTime.textContent = '0:00';
+          currentAudio = null;
+          currentPlayer = null;
+        });
+      }
+      return audio;
+    }
+
+    function showPlaying() {
+      iconPlay.style.display = 'none';
+      iconPause.style.display = '';
+    }
+
+    function showPaused() {
+      iconPlay.style.display = '';
+      iconPause.style.display = 'none';
+    }
+
+    playBtn.addEventListener('click', () => {
+      const a = getAudio();
+      if (currentAudio && currentAudio !== a) {
+        currentAudio.pause();
+        if (currentPlayer) {
+          currentPlayer.querySelector<SVGElement>('.icon-play')!.style.display = '';
+          currentPlayer.querySelector<SVGElement>('.icon-pause')!.style.display = 'none';
+        }
+      }
+      if (a.paused) {
+        a.play();
+        showPlaying();
+        currentAudio = a;
+        currentPlayer = player;
+      } else {
+        a.pause();
+        showPaused();
+      }
+    });
+
+    function seek(e: MouseEvent | Touch) {
+      const a = getAudio();
+      const rect = progressBar.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (a.duration) a.currentTime = pct * a.duration;
+      progressFill.style.width = `${pct * 100}%`;
+      currentTime.textContent = formatTime(a.currentTime);
+    }
+
+    progressBar.addEventListener('mousedown', (e) => {
+      dragging = true;
+      seek(e);
+      const onMove = (ev: MouseEvent) => seek(ev);
+      const onUp = () => { dragging = false; window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    });
+
+    progressBar.addEventListener('touchstart', (e) => {
+      dragging = true;
+      seek(e.touches[0]);
+    }, { passive: true });
+
+    progressBar.addEventListener('touchmove', (e) => {
+      if (dragging) seek(e.touches[0]);
+    }, { passive: true });
+
+    progressBar.addEventListener('touchend', () => { dragging = false; });
+
+    // Keyboard support for the slider
+    progressBar.addEventListener('keydown', (e) => {
+      const a = getAudio();
+      if (!a.duration) return;
+      if (e.key === 'ArrowRight') { a.currentTime = Math.min(a.duration, a.currentTime + 5); }
+      else if (e.key === 'ArrowLeft') { a.currentTime = Math.max(0, a.currentTime - 5); }
+    });
+  });
+</script>
 
 <style>
   .music {
@@ -264,7 +359,7 @@ const platforms = [
 
   .track-item {
     display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: var(--space-md);
     padding: var(--space-sm) var(--space-md);
@@ -288,49 +383,111 @@ const platforms = [
     min-width: 2.5rem;
   }
 
+  .track-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
   .track-title {
     font-size: var(--fs-body);
     font-weight: 600;
-    margin-bottom: 0.25rem;
   }
 
-  .track-desc {
-    font-size: var(--fs-small);
-    color: var(--text-muted);
-    line-height: 1.5;
+  .track-audio {
+    width: 100%;
+    max-width: 500px;
+    height: 36px;
+    border-radius: 18px;
+    filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9);
   }
 
-  .track-type {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    white-space: nowrap;
+  .player {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 500px;
   }
 
-  .track-type--electric {
-    background: var(--accent-blue-glow);
-    color: var(--accent-blue);
-  }
-
-  .track-type--acoustic {
-    background: var(--accent-gold-glow);
+  .player-play {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(240, 236, 226, 0.08);
+    border: 1px solid rgba(240, 236, 226, 0.12);
+    border-radius: 50%;
     color: var(--accent-gold);
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  .track-type--ambient {
-    background: rgba(61, 122, 85, 0.2);
-    color: var(--accent-green);
+  .player-play:hover {
+    background: var(--accent-gold-glow);
+    border-color: var(--accent-gold);
   }
 
-  .track-duration {
-    font-size: var(--fs-small);
+  .player-play svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .player-time {
+    font-size: 0.75rem;
     color: var(--text-muted);
     font-variant-numeric: tabular-nums;
-    min-width: 3rem;
-    text-align: right;
+    min-width: 2.5rem;
+    text-align: center;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .player-progress {
+    flex: 1;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    touch-action: none;
+  }
+
+  .player-progress::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: rgba(240, 236, 226, 0.1);
+    border-radius: 3px;
+  }
+
+  .player-progress-fill {
+    position: absolute;
+    left: 0;
+    height: 6px;
+    width: 0%;
+    background: var(--accent-gold);
+    border-radius: 3px;
+    pointer-events: none;
+    transition: width 0.1s linear;
+  }
+
+  .player-progress-fill::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background: var(--accent-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
   }
 
   .platforms {
@@ -376,20 +533,8 @@ const platforms = [
 
   @media (max-width: 768px) {
     .track-item {
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr;
       gap: var(--space-sm);
-    }
-
-    .track-desc {
-      display: none;
-    }
-
-    .track-duration {
-      display: none;
-    }
-
-    .track-type {
-      font-size: 0.65rem;
     }
   }
 </style>
