@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is the official website for **Slayeratti**, a guitar duo who write, sing, and perform original music. The site should showcase the band's identity, music, and upcoming performances while delivering a visually striking, immersive experience.
+This is the official website for **Slayeratti**, a guitar duo who write, sing, and perform original music. The site should showcase the band's identity, music, and upcoming performances while delivering an engaging user experience.
 
 ### Band Identity
 
@@ -31,7 +31,7 @@ The music spans a wide dynamic and emotional range:
 
 The `design-assets/` folder contains thematic inspiration:
 
-- **`t-shirt-theming.png`** — Ornate botanical illustration with crossed acoustic and electric guitars, surrounded by flowers, ferns, and decorative vines. Elegant serif "slayeratti" typography. White-on-black, hand-drawn/etched art style.
+- **`t-shirt-theming.png`** — Ornate botanical illustration with crossed acoustic and electric guitars, surrounded by flowers, ferns, and decorative vines. Elegant serif "slayeratti" typography.
 - **`website-theming.png`** — Additional website design direction and mood reference.
 
 Use these as the primary visual north star for all design decisions.
@@ -71,7 +71,7 @@ Use these as the primary visual north star for all design decisions.
 
 - Full-viewport immersive hero with atmospheric imagery or video
 - Band name prominently displayed with the ornate serif treatment
-- Tagline capturing the Slayeratti ethos (celebrating excellence in life and music)
+- Tagline capturing the Slayeratti ethos (celebrating excellence in music and life)
 - Subtle animated elements (floating particles, gentle parallax, botanical accents)
 
 ### 2. About / Bio
@@ -140,7 +140,7 @@ Use these as the primary visual north star for all design decisions.
 This site is hosted on **GitHub Pages**. All architecture and build decisions must respect its constraints:
 
 - **Static output only** — GitHub Pages serves static files. No server-side rendering, backend APIs, or databases at runtime.
-- **Build pipeline**: If using a static site generator or bundler (e.g., Jekyll, Astro, Vite, etc.), configure the build output to a `docs/` folder or use a GitHub Actions workflow to deploy from a build artifact.
+- **Build pipeline**: If using a static site generator or bundler (e.g., Jekyll, Astro, Vite, etc.), configure the build output to a `docs/` folder or use a GitHub Actions workflow to deploy from the `dist/` folder.
 - **Routing**: GitHub Pages does not support server-side redirects. For single-page app (SPA) routing, include a `404.html` that mirrors `index.html` to handle client-side routes, or use hash-based routing.
 - **Base path**: If deployed to `https://<user>.github.io/<repo>/`, assets and links must use relative paths or account for the repository base path.
 - **Custom domain**: Support optional custom domain configuration via a `CNAME` file in the deploy root.
@@ -163,7 +163,7 @@ When generating copy, descriptions, or placeholder text for the site:
 
 - **Confident and warm** — never arrogant, always inviting
 - **Poetic but accessible** — reflect the lyrical depth of the music without being pretentious
-- **Celebratory** — embrace the "excellence of life and music" ethos
+- **Celebratory** — embrace the "excellence of music and life" ethos
 - **Evocative** — use sensory language that mirrors the musical range (quiet intimacy to electric energy)
 
 ---
