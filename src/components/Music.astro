@@ -88,7 +88,7 @@ const platforms = [
       <p class="platforms-label">Listen on</p>
       <div class="platform-links">
         {platforms.map((p) => (
-          <a href={p.url} class="platform-link" aria-label={`Listen on ${p.name}`}>
+          <a href={p.url} target="_blank" class="platform-link" aria-label={`Listen on ${p.name}`}>
             <span class="platform-icon">{p.icon}</span>
             <span class="platform-name">{p.name}</span>
           </a>
