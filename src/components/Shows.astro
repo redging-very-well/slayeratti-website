@@ -1,18 +1,56 @@
 ---
 import FloralAccent from './FloralAccent.astro';
 import Sparkle from './Sparkle.astro';
-const shows = [
+const monthAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const allShows = [
+  {
+    date: '2026-05-20',
+    venue: 'Claire Inn',
+    venueUrl: 'https://www.theclareinn.com/',
+    description: 'Slayeratti grand unveiling! 🎸🎤',
+    time: '8:30 PM',
+    status: 'free',
+  },
   {
     date: '2026-05-31',
-    day: '31',
-    month: 'May',
     venue: 'Westgate Te Pumanawa Square',
     venueUrl: 'https://northwestshoppingcentre.co.nz/',
     description: 'Slayeratti community event',
     time: '2:00 PM',
     status: 'free',
   },
+  {
+    date: '2026-07-08',
+    venue: 'Taupō',
+    description: 'Venue to be announced',
+    status: 'tba',
+  },
+  {
+    date: '2026-07-13',
+    venue: 'Taupō',
+    description: 'Venue to be announced',
+    status: 'tba',
+  },
 ];
+
+// Anchor "today" to New Zealand time so shows roll over on the correct local day.
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' }).format(new Date());
+
+function withDateParts(show) {
+  const [, month, day] = show.date.split('-').map(Number);
+  return { ...show, day: String(day), month: monthAbbr[month - 1] };
+}
+
+const upcomingShows = allShows
+  .filter((show) => show.date >= today)
+  .sort((a, b) => a.date.localeCompare(b.date))
+  .map(withDateParts);
+
+const pastShows = allShows
+  .filter((show) => show.date < today)
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .map(withDateParts);
 ---
 
 <section class="shows section" id="shows">
@@ -35,33 +73,75 @@ const shows = [
       <p class="section-subtitle">Come celebrate with us</p>
     </div>
 
+    {pastShows.length > 0 && (
+      <h3 class="shows-subheading reveal">Upcoming Shows</h3>
+    )}
+
     <div class="shows-list">
-      {shows.map((show, i) => (
-        <article class="show-item reveal" style={`--delay: ${i * 0.1}s`}>
-          <div class="show-date">
-            <span class="show-day">{show.day}</span>
-            <span class="show-month">{show.month}</span>
-          </div>
+      {upcomingShows.length > 0 ? (
+        upcomingShows.map((show, i) => (
+          <article class="show-item reveal" style={`--delay: ${i * 0.1}s`}>
+            <div class="show-date">
+              <span class="show-day">{show.day}</span>
+              <span class="show-month">{show.month}</span>
+            </div>
 
-          <div class="show-details">
-            <h3 class="show-venue">
-              {show.venueUrl ? (
-                <a href={show.venueUrl} target="_blank" rel="noopener noreferrer" class="show-venue-link">{show.venue}</a>
-              ) : show.venue}
-            </h3>
-            <p class="show-meta">
-              <span class="show-time">{show.time}</span>
-              <span class="show-divider">·</span>
-              <span class="show-description">{show.description}</span>
-            </p>
-          </div>
+            <div class="show-details">
+              <h3 class="show-venue">
+                {show.venueUrl ? (
+                  <a href={show.venueUrl} target="_blank" rel="noopener noreferrer" class="show-venue-link">{show.venue}</a>
+                ) : show.venue}
+              </h3>
+              <p class="show-meta">
+                {show.time && <span class="show-time">{show.time}</span>}
+                {show.time && <span class="show-divider">·</span>}
+                <span class="show-description">{show.description}</span>
+              </p>
+            </div>
 
-          <div class="show-action">
-            <span class="show-free">Free Event</span>
-          </div>
-        </article>
-      ))}
+            <div class="show-action">
+              {show.status === 'free' && <span class="show-free">Free Event</span>}
+              {show.status === 'tba' && <span class="show-coming-soon">Details Soon</span>}
+            </div>
+          </article>
+        ))
+      ) : (
+        <p class="shows-empty reveal">No upcoming shows on the calendar right now — check back soon for new dates.</p>
+      )}
     </div>
+
+    {pastShows.length > 0 && (
+      <div class="shows-past">
+        <h3 class="shows-subheading reveal">Past Shows</h3>
+        <div class="shows-list shows-list--past">
+          {pastShows.map((show, i) => (
+            <article class="show-item show-item--past reveal" style={`--delay: ${i * 0.1}s`}>
+              <div class="show-date">
+                <span class="show-day">{show.day}</span>
+                <span class="show-month">{show.month}</span>
+              </div>
+
+              <div class="show-details">
+                <h3 class="show-venue">
+                  {show.venueUrl ? (
+                    <a href={show.venueUrl} target="_blank" rel="noopener noreferrer" class="show-venue-link">{show.venue}</a>
+                  ) : show.venue}
+                </h3>
+                <p class="show-meta">
+                  {show.time && <span class="show-time">{show.time}</span>}
+                  {show.time && <span class="show-divider">·</span>}
+                  <span class="show-description">{show.description}</span>
+                </p>
+              </div>
+
+              <div class="show-action">
+                <span class="show-past-tag">Past</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    )}
 
     <div class="shows-cta reveal">
       <p>Want us to play at your venue or event?</p>
@@ -269,6 +349,88 @@ const shows = [
     padding: 0.5rem 1rem;
     border: 1px dashed rgba(240, 236, 226, 0.15);
     border-radius: var(--border-radius);
+  }
+
+  .show-free {
+    display: inline-block;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--accent-gold);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent-gold-glow);
+    border-radius: var(--border-radius);
+    background: rgba(212, 175, 55, 0.08);
+  }
+
+  .shows-subheading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-heading);
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .shows-subheading::before,
+  .shows-subheading::after {
+    content: '';
+    height: 1px;
+    width: clamp(28px, 10vw, 80px);
+  }
+
+  .shows-subheading::before {
+    background: linear-gradient(90deg, transparent, var(--accent-gold-glow));
+  }
+
+  .shows-subheading::after {
+    background: linear-gradient(90deg, var(--accent-gold-glow), transparent);
+  }
+
+  .shows-past {
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-lg);
+  }
+
+  .shows-list--past {
+    margin-bottom: 0;
+  }
+
+  .show-item--past {
+    opacity: 0.6;
+  }
+
+  .show-item--past:hover {
+    opacity: 0.85;
+  }
+
+  .show-item--past .show-date {
+    background: rgba(240, 236, 226, 0.04);
+  }
+
+  .show-item--past .show-day {
+    color: var(--text-secondary);
+  }
+
+  .show-past-tag {
+    font-size: var(--fs-small);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.75;
+  }
+
+  .shows-empty {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-muted);
+    padding: var(--space-md);
   }
 
   .shows-cta {
