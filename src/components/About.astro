@@ -5,11 +5,21 @@ import Sparkle from './Sparkle.astro';
 
 <section class="about section" id="about">
   <Sparkle count={18} colors={['#d4af37', '#b5667a', '#f0ece2']} class="about-sparkles" />
-  <div class="about-bg-floral about-bg-floral--left" aria-hidden="true"><FloralAccent variant="rose" class="about-float-rose" /></div>
-  <div class="about-bg-floral about-bg-floral--right" aria-hidden="true"><FloralAccent variant="wildflower" class="about-float-wildflower" /></div>
-  <div class="about-bg-floral about-bg-floral--top" aria-hidden="true"><FloralAccent variant="peony" class="about-float-peony" /></div>
-  <div class="about-bg-floral about-bg-floral--bottom" aria-hidden="true"><FloralAccent variant="fern" class="about-float-fern" /></div>
-  <div class="about-bg-floral about-bg-floral--scatter" aria-hidden="true"><FloralAccent variant="petal-scatter" class="about-petal-scatter" /></div>
+  <div class="about-bg-floral about-bg-floral--left" aria-hidden="true">
+    <FloralAccent variant="rose" class="about-float-rose" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--right" aria-hidden="true">
+    <FloralAccent variant="wildflower" class="about-float-wildflower" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--top" aria-hidden="true">
+    <FloralAccent variant="peony" class="about-float-peony" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--bottom" aria-hidden="true">
+    <FloralAccent variant="fern" class="about-float-fern" />
+  </div>
+  <div class="about-bg-floral about-bg-floral--scatter" aria-hidden="true">
+    <FloralAccent variant="petal-scatter" class="about-petal-scatter" />
+  </div>
 
   <div class="container">
     <div class="section-title reveal">
@@ -20,6 +30,7 @@ import Sparkle from './Sparkle.astro';
       </div>
       <p class="section-subtitle">Two guitars, one vision</p>
     </div>
+
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
@@ -41,6 +52,7 @@ import Sparkle from './Sparkle.astro';
           enough that listeners can find their own meaning in it.
         </p>
       </div>
+
       <div class="about-members">
         <div class="member-card reveal">
           <FloralAccent variant="corner-tl" class="card-corner card-corner--tl" />
@@ -63,6 +75,7 @@ import Sparkle from './Sparkle.astro';
             beneath every song.
           </p>
         </div>
+
         <div class="member-card reveal">
           <FloralAccent variant="corner-tl" class="card-corner card-corner--tl" />
           <FloralAccent variant="corner-br" class="card-corner card-corner--br" />
@@ -86,51 +99,247 @@ import Sparkle from './Sparkle.astro';
       </div>
     </div>
   </div>
+
   <div class="floral-divider-wrap" aria-hidden="true">
     <FloralAccent variant="divider" class="section-floral-divider" />
   </div>
 </section>
 
 <style>
-  .about { background: var(--bg-primary); position: relative; overflow: hidden; }
-  :global(.about-sparkles) { z-index: 1; }
-  .about-bg-floral { position: absolute; pointer-events: none; z-index: 0; }
-  .about-bg-floral--left { top: 10%; left: -20px; color: var(--accent-rose); }
-  .about-bg-floral--right { bottom: 15%; right: -10px; color: var(--accent-green); }
-  .about-bg-floral--top { top: -20px; right: 15%; color: var(--accent-rose); opacity: 0.4; }
-  .about-bg-floral--bottom { bottom: 5%; left: 8%; color: var(--accent-green); opacity: 0.5; }
-  .about-bg-floral--scatter { top: 20%; right: 5%; color: var(--accent-gold); opacity: 0.3; }
-  :global(.about-float-rose) { width: 150px; height: 150px; }
-  :global(.about-float-wildflower) { width: 120px; height: 150px; }
-  :global(.about-float-peony) { width: 130px; height: 130px; }
-  :global(.about-float-fern) { width: 60px; height: 160px; }
-  :global(.about-petal-scatter) { width: 200px; height: 200px; }
-  .section-title-floral { display: flex; align-items: center; justify-content: center; gap: var(--space-sm); }
-  :global(.sprig-left) { width: 100px; height: 50px; color: var(--accent-green); transform: scaleX(-1); }
-  :global(.sprig-right) { width: 100px; height: 50px; color: var(--accent-green); }
-  :global(.card-corner) { position: absolute; width: 90px; height: 90px; transition: opacity var(--transition-fast); }
-  :global(.card-corner--tl) { top: -4px; left: -4px; }
-  :global(.card-corner--br) { bottom: -4px; right: -4px; }
-  .member-card:hover :global(.card-corner) { opacity: 1; }
-  .member-card:first-child :global(.card-corner) { color: var(--accent-blue); }
-  .member-card:last-child :global(.card-corner) { color: var(--accent-gold); }
-  .floral-divider-wrap { text-align: center; padding: var(--space-md) 0 0; color: var(--accent-rose); }
-  :global(.section-floral-divider) { width: min(100%, 400px); height: auto; margin: 0 auto; }
-  .about-grid { display: grid; gap: var(--space-lg); }
-  .about-text { max-width: 700px; margin: 0 auto; text-align: center; }
-  .about-text p { color: var(--text-secondary); margin-bottom: var(--space-sm); }
-  .about-text p:last-child { margin-bottom: 0; }
-  .about-text strong { color: var(--accent-gold); font-weight: 600; }
-  .about-text em { color: var(--text-primary); font-style: italic; }
-  .about-members { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-md); margin-top: var(--space-md); }
-  .member-card { position: relative; overflow: hidden; background: var(--bg-card); border: 1px solid rgba(240, 236, 226, 0.06); border-radius: var(--border-radius); padding: var(--space-md); text-align: center; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
-  .member-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); }
-  .member-card:first-child:hover { border-color: var(--accent-blue); box-shadow: 0 8px 30px var(--accent-blue-glow); }
-  .member-card:last-child:hover { border-color: var(--accent-gold); box-shadow: 0 8px 30px var(--accent-gold-glow); }
-  .member-icon { width: 80px; height: 80px; margin: 0 auto var(--space-sm); color: var(--accent-blue); }
-  .acoustic-icon { color: var(--accent-gold); }
-  .member-icon svg { width: 100%; height: 100%; }
-  .member-card h3 { font-size: var(--fs-h3); margin-bottom: var(--space-xs); }
-  .member-instrument { font-size: var(--fs-small); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--space-sm); }
-  .member-desc { color: var(--text-secondary); font-size: var(--fs-small); line-height: 1.6; }
+  .about {
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  :global(.about-sparkles) {
+    z-index: 1;
+  }
+
+  /* Floating background florals */
+  .about-bg-floral {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .about-bg-floral--left {
+    top: 10%;
+    left: -20px;
+    color: var(--accent-rose);
+  }
+
+  .about-bg-floral--right {
+    bottom: 15%;
+    right: -10px;
+    color: var(--accent-green);
+  }
+
+  .about-bg-floral--top {
+    top: -20px;
+    right: 15%;
+    color: var(--accent-rose);
+    opacity: 0.4;
+  }
+
+  .about-bg-floral--bottom {
+    bottom: 5%;
+    left: 8%;
+    color: var(--accent-green);
+    opacity: 0.5;
+  }
+
+  .about-bg-floral--scatter {
+    top: 20%;
+    right: 5%;
+    color: var(--accent-gold);
+    opacity: 0.3;
+  }
+
+  :global(.about-float-rose) {
+    width: 150px;
+    height: 150px;
+  }
+
+  :global(.about-float-wildflower) {
+    width: 120px;
+    height: 150px;
+  }
+
+  :global(.about-float-peony) {
+    width: 130px;
+    height: 130px;
+  }
+
+  :global(.about-float-fern) {
+    width: 60px;
+    height: 160px;
+  }
+
+  :global(.about-petal-scatter) {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* Section title floral flanking */
+  .section-title-floral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  :global(.sprig-left) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+    transform: scaleX(-1);
+  }
+
+  :global(.sprig-right) {
+    width: 100px;
+    height: 50px;
+    color: var(--accent-green);
+  }
+
+  /* Card corner florals */
+  :global(.card-corner) {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    transition: opacity var(--transition-fast);
+  }
+
+  :global(.card-corner--tl) {
+    top: -4px;
+    left: -4px;
+  }
+
+  :global(.card-corner--br) {
+    bottom: -4px;
+    right: -4px;
+  }
+
+  .member-card:hover :global(.card-corner) {
+    opacity: 1;
+  }
+
+  .member-card:first-child :global(.card-corner) {
+    color: var(--accent-blue);
+  }
+
+  .member-card:last-child :global(.card-corner) {
+    color: var(--accent-gold);
+  }
+
+  /* Floral section divider */
+  .floral-divider-wrap {
+    text-align: center;
+    padding: var(--space-md) 0 0;
+    color: var(--accent-rose);
+  }
+
+  :global(.section-floral-divider) {
+    width: min(100%, 400px);
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .about-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .about-text {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about-text p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-text strong {
+    color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  .about-text em {
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  .about-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .member-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid rgba(240, 236, 226, 0.06);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    text-align: center;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .member-card:first-child:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 8px 30px var(--accent-blue-glow);
+  }
+
+  .member-card:last-child:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 8px 30px var(--accent-gold-glow);
+  }
+
+  .member-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-sm);
+    color: var(--accent-blue);
+  }
+
+  .acoustic-icon {
+    color: var(--accent-gold);
+  }
+
+  .member-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .member-card h3 {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-xs);
+  }
+
+  .member-instrument {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-sm);
+  }
+
+  .member-desc {
+    color: var(--text-secondary);
+    font-size: var(--fs-small);
+    line-height: 1.6;
+  }
 </style>
